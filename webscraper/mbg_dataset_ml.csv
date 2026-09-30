@@ -1,0 +1,16 @@
+﻿id_data;tanggal_kasus;provinsi;kabupaten_kota;jumlah_kasus;sumber_asal;catatan_cleaning
+1;2025-01-16;Jawa Tengah;Sukoharjo;10.0;Tempo;
+2;2025-02-18;Nusa Tenggara Timur;Sumba Timur;29.0;Tempo;
+3;2025-04-21;Jawa Barat;Cianjur;176.0;Tempo;
+5;2025-05-11;Jawa Barat;Bogor;210.0;Tempo;
+6;2025-08-27;Sulawesi Tengah;Palu;20.0;BGN;
+7;2025-09-17;Sulawesi Tengah;Banggai Kepulauan;335.0;"BGN; Liputan6";Dua laporan pada tanggal dan lokasi yang sama merupakan satu kejadian. Angka 277 merupakan laporan sementara, sedangkan 335 merupakan jumlah yang lebih baru. Data tidak dijumlahkan.
+8;2025-10-03;Nusa Tenggara Timur;Soe;384.0;Tempo;
+9;2025-10-08;Jawa Tengah;Klaten;13.0;Tempo;
+10;2025-10-09;Jawa Tengah;Karanganyar;22.0;Tempo;
+11;2025-10-09;Kalimantan Selatan;Banjar;63.0;Tempo;
+12;2025-10-22;Jawa Timur;Banyuwangi;112.0;Liputan6;Tanggal kejadian dilengkapi berdasarkan verifikasi artikel sumber.
+13;2026-05-08;DKI Jakarta;Jakarta Timur;188.0;Tempo;
+14;2026-07-31;Jawa Tengah;Semarang;707.0;Tempo;
+16;2026-09-01;Jawa Timur;Sidoarjo;748.0;"Tempo; Liputan6";Dua laporan pada tanggal dan lokasi yang sama merupakan satu kejadian. Angka 431 merupakan laporan awal, sedangkan 748 merupakan pembaruan jumlah korban. Data tidak dijumlahkan.
+17;2026-09-22;Jawa Timur;Jember;28.0;Liputan6;

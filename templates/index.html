@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Prediksi Jumlah Kasus MBG</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+    <!-- ================================================== -->
+    <!-- NAVBAR -->
+    <!-- ================================================== -->
+
+    <header class="navbar">
+
+        <div class="navbar-container">
+
+            <!-- LOGO PROJECT -->
+            <a
+                href="/"
+                class="logo"
+            >
+                MBG Predict
+            </a>
+
+
+            <!-- NAVIGATION -->
+            <div class="dashboard-nav">
+
+                <a href="/">
+                    Dashboard
+                </a>
+
+                <a
+                    href="/prediksi"
+                    class="active"
+                >
+                    Prediksi
+                </a>
+
+                <a href="/perbandingan-model">
+                    Perbandingan Model
+                </a>
+
+            </div>
+
+
+            <!-- MODEL SWITCH -->
+            <div class="model-switch">
+
+                <label for="modelSelect">
+                    Model:
+                </label>
+
+                <select
+                    id="modelSelect"
+                    name="model"
+                >
+
+                    <option value="random_forest">
+                        Random Forest
+                    </option>
+
+                    <option value="decision_tree">
+                        Decision Tree
+                    </option>
+
+                    <option value="xgboost">
+                        XGBoost
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================================================== -->
+    <!-- MAIN -->
+    <!-- ================================================== -->
+
+    <main class="container">
+
+
+        <!-- ================================================== -->
+        <!-- HERO -->
+        <!-- ================================================== -->
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <span class="badge">
+                    MACHINE LEARNING
+                </span>
+
+
+                <h1>
+                    Prediksi Jumlah Kasus
+                    <br>
+                    Program MBG
+                </h1>
+
+
+                <p>
+                    Sistem untuk melakukan estimasi jumlah kasus
+                    pada Program Makan Bergizi Gratis berdasarkan
+                    tahun, bulan, dan provinsi menggunakan metode
+                    <strong id="heroModelName">
+                        Random Forest Regression
+                    </strong>.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================== -->
+        <!-- CONTENT -->
+        <!-- ================================================== -->
+
+        <section class="prediction-section">
+
+
+            <!-- ================================================== -->
+            <!-- FORM CARD -->
+            <!-- ================================================== -->
+
+            <div class="card form-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h2>
+                            Input Prediksi
+                        </h2>
+
+                        <p>
+                            Masukkan periode dan provinsi yang ingin
+                            digunakan untuk melakukan estimasi.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <form id="predictionForm">
+
+
+                    <!-- ================================================== -->
+                    <!-- TAHUN -->
+                    <!-- ================================================== -->
+
+                    <div class="form-group">
+
+                        <label for="tahun">
+                            Tahun
+                        </label>
+
+                        <input
+                            type="number"
+                            id="tahun"
+                            name="tahun"
+                            value="2026"
+                            min="2025"
+                            required
+                        >
+
+                        <small>
+                            Data yang digunakan dalam sistem dimulai
+                            dari tahun 2025.
+                        </small>
+
+                    </div>
+
+
+                    <!-- ================================================== -->
+                    <!-- BULAN -->
+                    <!-- ================================================== -->
+
+                    <div class="form-group">
+
+                        <label for="bulan">
+                            Bulan
+                        </label>
+
+                        <select
+                            id="bulan"
+                            name="bulan"
+                            required
+                        >
+
+                            <option value="1">
+                                Januari
+                            </option>
+
+                            <option value="2">
+                                Februari
+                            </option>
+
+                            <option value="3">
+                                Maret
+                            </option>
+
+                            <option value="4">
+                                April
+                            </option>
+
+                            <option value="5">
+                                Mei
+                            </option>
+
+                            <option value="6">
+                                Juni
+                            </option>
+
+                            <option value="7">
+                                Juli
+                            </option>
+
+                            <option value="8">
+                                Agustus
+                            </option>
+
+                            <option value="9">
+                                September
+                            </option>
+
+                            <option value="10">
+                                Oktober
+                            </option>
+
+                            <option value="11">
+                                November
+                            </option>
+
+                            <option value="12">
+                                Desember
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- ================================================== -->
+                    <!-- PROVINSI -->
+                    <!-- ================================================== -->
+
+                    <div class="form-group">
+
+                        <label for="provinsi">
+                            Provinsi
+                        </label>
+
+                        <select
+                            id="provinsi"
+                            name="provinsi"
+                            required
+                        >
+
+                            <option value="DKI Jakarta">
+                                DKI Jakarta
+                            </option>
+
+                            <option value="Jawa Barat">
+                                Jawa Barat
+                            </option>
+
+                            <option value="Jawa Tengah">
+                                Jawa Tengah
+                            </option>
+
+                            <option value="Jawa Timur">
+                                Jawa Timur
+                            </option>
+
+                            <option value="Kalimantan Selatan">
+                                Kalimantan Selatan
+                            </option>
+
+                            <option value="Nusa Tenggara Timur">
+                                Nusa Tenggara Timur
+                            </option>
+
+                            <option value="Sulawesi Tengah">
+                                Sulawesi Tengah
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- ================================================== -->
+                    <!-- BUTTON -->
+                    <!-- ================================================== -->
+
+                    <button
+                        type="submit"
+                        class="predict-button"
+                    >
+                        Prediksi Sekarang
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- RESULT CARD -->
+            <!-- ================================================== -->
+
+            <div
+                class="card result-card"
+                id="hasil"
+            >
+
+                <div class="result-placeholder">
+
+                    <div class="result-icon">
+                        ?
+                    </div>
+
+                    <h2>
+                        Estimasi Jumlah Kasus
+                    </h2>
+
+                    <p>
+                        Masukkan data kemudian tekan tombol
+                        <strong>Prediksi Sekarang</strong>
+                        untuk melihat estimasi berdasarkan
+                        model yang dipilih.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ================================================== -->
+        <!-- DATA & SUMBER -->
+        <!-- ================================================== -->
+
+        <section class="data-source-section">
+
+            <div class="section-heading">
+
+                <span class="badge">
+                    DATASET
+                </span>
+
+                <h2>
+                    Data & Sumber
+                </h2>
+
+                <p>
+                    Data yang digunakan dalam sistem dikumpulkan dari
+                    beberapa sumber berita dan kemudian melalui proses
+                    cleaning serta preprocessing sebelum digunakan
+                    untuk machine learning.
+                </p>
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- DATA STATISTICS -->
+            <!-- ================================================== -->
+
+            <div class="data-stat-grid">
+
+                <div class="data-stat-card">
+
+                    <strong>
+                        20
+                    </strong>
+
+                    <span>
+                        Data Terkumpul
+                    </span>
+
+                </div>
+
+
+                <div class="data-stat-card">
+
+                    <strong>
+                        15
+                    </strong>
+
+                    <span>
+                        Data Digunakan untuk ML
+                    </span>
+
+                </div>
+
+
+                <div class="data-stat-card">
+
+                    <strong>
+                        7
+                    </strong>
+
+                    <span>
+                        Provinsi
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- SUMBER DATA -->
+            <!-- ================================================== -->
+
+            <div class="source-grid">
+
+
+                <div class="source-card">
+
+                    <h3>
+                        BGN
+                    </h3>
+
+                    <p>
+                        Data kasus yang diperoleh dari publikasi
+                        Badan Gizi Nasional.
+                    </p>
+
+                </div>
+
+
+                <div class="source-card">
+
+                    <h3>
+                        Tempo
+                    </h3>
+
+                    <p>
+                        Data kasus yang diperoleh melalui artikel
+                        berita Tempo.
+                    </p>
+
+                </div>
+
+
+                <div class="source-card">
+
+                    <h3>
+                        Liputan6
+                    </h3>
+
+                    <p>
+                        Data kasus yang diperoleh melalui artikel
+                        berita Liputan6.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- PROCESS -->
+            <!-- ================================================== -->
+
+            <div class="process-card">
+
+                <h3>
+                    Proses Pengolahan Data
+                </h3>
+
+                <div class="process-flow">
+
+                    <span>
+                        Pengumpulan Data
+                    </span>
+
+                    <span class="process-arrow">
+                        →
+                    </span>
+
+                    <span>
+                        Cleaning
+                    </span>
+
+                    <span class="process-arrow">
+                        →
+                    </span>
+
+                    <span>
+                        Preprocessing
+                    </span>
+
+                    <span class="process-arrow">
+                        →
+                    </span>
+
+                    <span>
+                        Machine Learning
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- CATATAN DATA -->
+            <!-- ================================================== -->
+
+            <div class="data-note">
+
+                <strong>
+                    Catatan:
+                </strong>
+
+                <span>
+                    Tidak seluruh data hasil pengumpulan dapat digunakan
+                    dalam pemodelan. Data yang tidak memiliki informasi
+                    yang diperlukan untuk proses machine learning
+                    dikeluarkan dari dataset ML.
+                </span>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ================================================== -->
+        <!-- INFORMATION -->
+        <!-- ================================================== -->
+
+        <section class="information">
+
+
+            <!-- TENTANG SISTEM -->
+            <div class="info-card">
+
+                <h3>
+                    Tentang Sistem
+                </h3>
+
+                <p>
+                    Sistem menggunakan data kasus Program
+                    Makan Bergizi Gratis yang telah dikumpulkan
+                    dan diproses untuk kebutuhan pemodelan
+                    machine learning.
+                </p>
+
+            </div>
+
+
+            <!-- MODEL AKTIF -->
+            <div class="info-card">
+
+                <h3>
+                    Model Aktif
+                </h3>
+
+                <p>
+                    Model yang digunakan untuk melakukan
+                    estimasi saat ini adalah
+                    <strong id="infoModelName">
+                        Random Forest Regression
+                    </strong>.
+                </p>
+
+            </div>
+
+
+            <!-- SATUAN HASIL -->
+            <div class="info-card">
+
+                <h3>
+                    Satuan Hasil
+                </h3>
+
+                <p>
+                    Hasil estimasi ditampilkan sebagai
+                    perkiraan jumlah kasus dan dibulatkan
+                    ke bilangan bulat terdekat.
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ================================================== -->
+        <!-- CATATAN HASIL -->
+        <!-- ================================================== -->
+
+        <section class="information">
+
+            <div class="info-card">
+
+                <h3>
+                    Catatan
+                </h3>
+
+                <p>
+                    Hasil yang ditampilkan merupakan estimasi
+                    dari model machine learning berdasarkan
+                    data yang digunakan dalam sistem. Hasil
+                    bukan merupakan jumlah kasus aktual.
+                </p>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ================================================== -->
+    <!-- FOOTER -->
+    <!-- ================================================== -->
+
+    <footer class="footer">
+
+        <p>
+            Prediksi Jumlah Kasus MBG
+        </p>
+
+        <p>
+            Machine Learning Project
+        </p>
+
+    </footer>
+
+
+    <!-- ================================================== -->
+    <!-- JAVASCRIPT -->
+    <!-- ================================================== -->
+
+    <script>
+
+
+        // ====================================================
+        // ELEMENT
+        // ====================================================
+
+        const form =
+            document.getElementById(
+                "predictionForm"
+            );
+
+
+        const modelSelect =
+            document.getElementById(
+                "modelSelect"
+            );
+
+
+        const heroModelName =
+            document.getElementById(
+                "heroModelName"
+            );
+
+
+        const infoModelName =
+            document.getElementById(
+                "infoModelName"
+            );
+
+
+        // ====================================================
+        // NAMA MODEL
+        // ====================================================
+
+        const modelNames = {
+
+            random_forest:
+                "Random Forest Regression",
+
+            decision_tree:
+                "Decision Tree Regression",
+
+            xgboost:
+                "XGBoost Regression"
+
+        };
+
+
+        // ====================================================
+        // NAMA BULAN
+        // ====================================================
+
+        const monthNames = {
+
+            1: "Januari",
+            2: "Februari",
+            3: "Maret",
+            4: "April",
+            5: "Mei",
+            6: "Juni",
+            7: "Juli",
+            8: "Agustus",
+            9: "September",
+            10: "Oktober",
+            11: "November",
+            12: "Desember"
+
+        };
+
+
+        // ====================================================
+        // KETIKA MODEL DIGANTI
+        // ====================================================
+
+        modelSelect.addEventListener(
+            "change",
+            function() {
+
+                const selectedModel =
+                    modelSelect.value;
+
+
+                const selectedModelName =
+                    modelNames[selectedModel];
+
+
+                // Update nama model pada Hero
+                heroModelName.textContent =
+                    selectedModelName;
+
+
+                // Update nama model pada
+                // information card
+                infoModelName.textContent =
+                    selectedModelName;
+
+
+                // Reset hasil prediksi
+                document.getElementById(
+                    "hasil"
+                ).innerHTML = `
+
+                    <div class="result-placeholder">
+
+                        <div class="result-icon">
+                            ?
+                        </div>
+
+                        <h2>
+                            Model Diganti
+                        </h2>
+
+                        <p>
+
+                            Model yang dipilih:
+                            <strong>
+                                ${selectedModelName}
+                            </strong>
+
+                            <br><br>
+
+                            Tekan tombol
+                            <strong>
+                                Prediksi Sekarang
+                            </strong>
+                            untuk melakukan estimasi.
+
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+        );
+
+
+        // ====================================================
+        // KETIKA FORM DI-SUBMIT
+        // ====================================================
+
+        form.addEventListener(
+            "submit",
+            async function(event) {
+
+
+                event.preventDefault();
+
+
+                // ==========================================
+                // MENGAMBIL INPUT
+                // ==========================================
+
+                const tahun =
+                    document.getElementById(
+                        "tahun"
+                    ).value;
+
+
+                const bulan =
+                    document.getElementById(
+                        "bulan"
+                    ).value;
+
+
+                const provinsi =
+                    document.getElementById(
+                        "provinsi"
+                    ).value;
+
+
+                const selectedModel =
+                    modelSelect.value;
+
+
+                // ==========================================
+                // CEK TAHUN
+                // ==========================================
+
+                if (
+                    parseInt(tahun) < 2025
+                ) {
+
+                    document.getElementById(
+                        "hasil"
+                    ).innerHTML = `
+
+                        <div class="result-no-data">
+
+                            <div
+                                class="result-icon warning"
+                            >
+                                !
+                            </div>
+
+                            <h2>
+                                Data Belum Tersedia
+                            </h2>
+
+                            <p>
+
+                                Data MBG yang digunakan
+                                dalam sistem ini belum
+                                tersedia untuk tahun
+                                <strong>
+                                    ${tahun}
+                                </strong>.
+
+                            </p>
+
+                        </div>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                // ==========================================
+                // BUTTON
+                // ==========================================
+
+                const button =
+                    document.querySelector(
+                        ".predict-button"
+                    );
+
+
+                button.disabled = true;
+
+
+                button.innerHTML =
+                    "Memproses...";
+
+
+                // ==========================================
+                // MENGIRIM DATA
+                // ==========================================
+
+                try {
+
+
+                    const response =
+                        await fetch(
+                            "/predict",
+                            {
+
+                                method: "POST",
+
+                                headers: {
+
+                                    "Content-Type":
+                                        "application/json"
+
+                                },
+
+                                body:
+                                    JSON.stringify({
+
+                                        tahun:
+                                            parseInt(
+                                                tahun
+                                            ),
+
+                                        bulan:
+                                            parseInt(
+                                                bulan
+                                            ),
+
+                                        provinsi:
+                                            provinsi,
+
+                                        model:
+                                            selectedModel
+
+                                    })
+
+                            }
+                        );
+
+
+                    // ======================================
+                    // RESPONSE
+                    // ======================================
+
+                    const data =
+                        await response.json();
+
+
+                    // ======================================
+                    // TIDAK ADA DATA DARI BACKEND
+                    // ======================================
+
+                    if (
+                        data.status ===
+                        "no_data"
+                    ) {
+
+
+                        document.getElementById(
+                            "hasil"
+                        ).innerHTML = `
+
+                            <div class="result-no-data">
+
+                                <div
+                                    class="result-icon warning"
+                                >
+                                    !
+                                </div>
+
+                                <h2>
+                                    Data Belum Tersedia
+                                </h2>
+
+                                <p>
+                                    ${data.message}
+                                </p>
+
+                            </div>
+
+                        `;
+
+
+                        return;
+
+                    }
+
+
+                    // ======================================
+                    // ERROR
+                    // ======================================
+
+                    if (
+                        data.status ===
+                        "error"
+                    ) {
+
+
+                        document.getElementById(
+                            "hasil"
+                        ).innerHTML = `
+
+                            <div class="result-no-data">
+
+                                <div
+                                    class="result-icon warning"
+                                >
+                                    !
+                                </div>
+
+                                <h2>
+                                    Terjadi Kesalahan
+                                </h2>
+
+                                <p>
+                                    ${data.error}
+                                </p>
+
+                            </div>
+
+                        `;
+
+
+                        return;
+
+                    }
+
+
+                    // ======================================
+                    // HASIL PREDIKSI
+                    // ======================================
+
+                    if (
+                        data.status ===
+                        "success"
+                    ) {
+
+
+                        const namaBulan =
+                            monthNames[
+                                data.bulan
+                            ] ||
+                            data.bulan;
+
+
+                        // ----------------------------------
+                        // STATUS DATA
+                        // ----------------------------------
+
+                        let statusDataClass =
+                            "data-status";
+
+                        let statusDataIcon =
+                            "✓";
+
+
+                        if (
+                            data.data_historis_provinsi <= 3
+                        ) {
+
+                            statusDataClass =
+                                "data-status limited";
+
+                            statusDataIcon =
+                                "⚠";
+
+                        }
+
+
+                        if (
+                            data.data_historis_provinsi === 0
+                        ) {
+
+                            statusDataClass =
+                                "data-status empty";
+
+                            statusDataIcon =
+                                "!";
+
+                        }
+
+
+                        // ----------------------------------
+                        // TAMPILKAN HASIL
+                        // ----------------------------------
+
+                        document.getElementById(
+                            "hasil"
+                        ).innerHTML = `
+
+                            <div class="result-success">
+
+
+                                <span class="result-label">
+                                    ESTIMASI JUMLAH KASUS
+                                </span>
+
+
+                                <div
+                                    class="prediction-number"
+                                >
+
+                                    ${data.prediksi_jumlah_kasus}
+
+                                </div>
+
+
+                                <div
+                                    class="prediction-unit"
+                                >
+
+                                    kasus
+
+                                </div>
+
+
+                                <div
+                                    class="result-model"
+                                >
+
+                                    Model:
+                                    <strong>
+                                        ${data.model_name}
+                                    </strong>
+
+                                </div>
+
+
+                                <div
+                                    class="result-details"
+                                >
+
+
+                                    <div
+                                        class="detail-item"
+                                    >
+
+                                        <span>
+                                            Tahun
+                                        </span>
+
+                                        <strong>
+                                            ${data.tahun}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div
+                                        class="detail-item"
+                                    >
+
+                                        <span>
+                                            Bulan
+                                        </span>
+
+                                        <strong>
+                                            ${namaBulan}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div
+                                        class="detail-item"
+                                    >
+
+                                        <span>
+                                            Provinsi
+                                        </span>
+
+                                        <strong>
+                                            ${data.provinsi}
+                                        </strong>
+
+                                    </div>
+
+
+                                </div>
+
+
+                                <!-- ================================= -->
+                                <!-- INFORMASI DATA -->
+                                <!-- ================================= -->
+
+                                <div class="prediction-data-info">
+
+                                    <div class="prediction-data-title">
+                                        INFORMASI DATA
+                                    </div>
+
+
+                                    <div class="prediction-data-grid">
+
+                                        <div class="prediction-data-item">
+
+                                            <span>
+                                                Data historis provinsi
+                                            </span>
+
+                                            <strong>
+                                                ${data.data_historis_provinsi}
+                                            </strong>
+
+                                        </div>
+
+
+                                        <div class="prediction-data-item">
+
+                                            <span>
+                                                Total data untuk ML
+                                            </span>
+
+                                            <strong>
+                                                ${data.total_data_ml}
+                                            </strong>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="${statusDataClass}">
+
+                                        <span>
+                                            ${statusDataIcon}
+                                        </span>
+
+                                        <span>
+                                            ${data.status_data}
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+
+                                <p
+                                    style="
+                                        margin-top: 24px;
+                                        font-size: 13px;
+                                        line-height: 1.6;
+                                        color: #6b7280;
+                                    "
+                                >
+
+                                    Hasil ini merupakan estimasi
+                                    berdasarkan model machine learning
+                                    dan data yang digunakan dalam sistem,
+                                    bukan jumlah kasus aktual.
+
+                                </p>
+
+
+                            </div>
+
+                        `;
+
+                    }
+
+
+                } catch (error) {
+
+
+                    // ======================================
+                    // ERROR KONEKSI
+                    // ======================================
+
+                    document.getElementById(
+                        "hasil"
+                    ).innerHTML = `
+
+                        <div class="result-no-data">
+
+                            <div
+                                class="result-icon warning"
+                            >
+                                !
+                            </div>
+
+                            <h2>
+                                Gagal Terhubung
+                            </h2>
+
+                            <p>
+
+                                Tidak dapat terhubung
+                                ke server Flask.
+
+                            </p>
+
+                        </div>
+
+                    `;
+
+
+                } finally {
+
+
+                    // ======================================
+                    // KEMBALIKAN BUTTON
+                    // ======================================
+
+                    button.disabled = false;
+
+                    button.innerHTML =
+                        "Prediksi Sekarang";
+
+
+                }
+
+
+            }
+
+        );
+
+
+    </script>
+
+
+</body>
+
+</html>

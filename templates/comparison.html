@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Perbandingan Model - MBG Predict</title>
+
+
+    <!-- CSS -->
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- ================================================== -->
+    <!-- NAVBAR -->
+    <!-- ================================================== -->
+
+    <header class="navbar">
+
+        <div class="navbar-container">
+
+
+            <!-- LOGO -->
+
+            <a
+                href="/"
+                class="logo"
+            >
+                MBG Predict
+            </a>
+
+
+            <!-- NAVIGATION -->
+
+            <div class="dashboard-nav">
+
+                <a href="/">
+                    Dashboard
+                </a>
+
+                <a href="/prediksi">
+                    Prediksi
+                </a>
+
+                <a
+                    href="/perbandingan-model"
+                    class="active"
+                >
+                    Perbandingan Model
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </header>
+
+
+    <!-- ================================================== -->
+    <!-- MAIN -->
+    <!-- ================================================== -->
+
+    <main class="container">
+
+
+        <!-- ================================================== -->
+        <!-- HERO -->
+        <!-- ================================================== -->
+
+        <section class="hero">
+
+
+            <div class="hero-content">
+
+
+                <span class="badge">
+                    MACHINE LEARNING
+                </span>
+
+
+                <h1>
+                    Perbandingan Model
+                </h1>
+
+
+                <p>
+
+                    Perbandingan performa model
+                    machine learning yang digunakan
+                    untuk prediksi jumlah kasus
+                    Program Makan Bergizi Gratis.
+
+                </p>
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ================================================== -->
+        <!-- COMPARISON TABLE -->
+        <!-- ================================================== -->
+
+        <section class="comparison-section">
+
+
+            <div class="card comparison-card">
+
+
+                <div class="card-header">
+
+
+                    <div>
+
+                        <h2>
+                            Hasil Perbandingan
+                        </h2>
+
+                        <p>
+
+                            Perbandingan dilakukan menggunakan
+                            metrik MAE, RMSE, dan R².
+
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- ================================================== -->
+                <!-- TABLE -->
+                <!-- ================================================== -->
+
+                <div class="comparison-table-wrapper">
+
+
+                    <table class="comparison-table">
+
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Model
+                                </th>
+
+                                <th>
+                                    MAE
+                                </th>
+
+                                <th>
+                                    RMSE
+                                </th>
+
+                                <th>
+                                    R²
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for row in comparison_data %}
+
+                            <tr>
+
+                                <td>
+
+                                    <strong>
+                                        {{ row["Model"] }}
+                                    </strong>
+
+                                </td>
+
+                                <td>
+                                    {{ row["MAE"] }}
+                                </td>
+
+                                <td>
+                                    {{ row["RMSE"] }}
+                                </td>
+
+                                <td>
+                                    {{ row["R2"] }}
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+
+                    </table>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ================================================== -->
+        <!-- GRAPH SECTION -->
+        <!-- ================================================== -->
+
+        <section class="chart-section">
+
+
+            <!-- ================================================== -->
+            <!-- MAE CHART -->
+            <!-- ================================================== -->
+
+            <div class="card chart-card">
+
+
+                <div class="chart-header">
+
+                    <h2>
+                        Perbandingan MAE
+                    </h2>
+
+                    <p>
+
+                        Mean Absolute Error dari setiap
+                        model pada data pengujian.
+
+                    </p>
+
+                </div>
+
+
+                <div class="chart-container">
+
+                    <canvas id="maeChart"></canvas>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- RMSE CHART -->
+            <!-- ================================================== -->
+
+            <div class="card chart-card">
+
+
+                <div class="chart-header">
+
+                    <h2>
+                        Perbandingan RMSE
+                    </h2>
+
+                    <p>
+
+                        Root Mean Squared Error dari setiap
+                        model pada data pengujian.
+
+                    </p>
+
+                </div>
+
+
+                <div class="chart-container">
+
+                    <canvas id="rmseChart"></canvas>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- R2 CHART -->
+            <!-- ================================================== -->
+
+            <div class="card chart-card chart-card-wide">
+
+
+                <div class="chart-header">
+
+                    <h2>
+                        Perbandingan R²
+                    </h2>
+
+                    <p>
+
+                        Nilai R² dari setiap model pada
+                        data pengujian.
+
+                    </p>
+
+                </div>
+
+
+                <div class="chart-container">
+
+                    <canvas id="r2Chart"></canvas>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ================================================== -->
+        <!-- METRIC INFORMATION -->
+        <!-- ================================================== -->
+
+        <section class="metric-section">
+
+
+            <div class="info-card">
+
+
+                <h3>
+                    MAE
+                </h3>
+
+
+                <p>
+
+                    Mean Absolute Error menunjukkan
+                    rata-rata selisih absolut antara
+                    nilai aktual dan hasil prediksi.
+
+                </p>
+
+
+                <p>
+
+                    Semakin kecil nilai MAE,
+                    semakin kecil rata-rata kesalahan
+                    prediksi.
+
+                </p>
+
+
+            </div>
+
+
+            <div class="info-card">
+
+
+                <h3>
+                    RMSE
+                </h3>
+
+
+                <p>
+
+                    Root Mean Squared Error menunjukkan
+                    besarnya kesalahan prediksi dengan
+                    memberikan pengaruh lebih besar
+                    terhadap kesalahan yang besar.
+
+                </p>
+
+
+                <p>
+
+                    Semakin kecil nilai RMSE,
+                    semakin kecil kesalahan prediksi.
+
+                </p>
+
+
+            </div>
+
+
+            <div class="info-card">
+
+
+                <h3>
+                    R²
+                </h3>
+
+
+                <p>
+
+                    R² menunjukkan seberapa besar variasi
+                    pada data target yang dapat dijelaskan
+                    oleh model pada data pengujian.
+
+                </p>
+
+
+                <p>
+
+                    Nilai R² dapat bernilai negatif
+                    apabila performa model pada data
+                    pengujian lebih buruk dibandingkan
+                    baseline tertentu.
+
+                </p>
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ================================================== -->
+        <!-- NOTE -->
+        <!-- ================================================== -->
+
+        <section class="comparison-note">
+
+
+            <div class="card">
+
+
+                <h3>
+                    Catatan
+                </h3>
+
+
+                <p>
+
+                    Hasil perbandingan ini diperoleh
+                    menggunakan dataset yang tersedia
+                    dalam penelitian dan pembagian data
+                    pengujian yang sama untuk setiap model.
+
+                </p>
+
+
+                <p>
+
+                    Jumlah data yang digunakan masih
+                    terbatas sehingga hasil evaluasi
+                    dapat berubah apabila jumlah dan
+                    variasi data bertambah.
+
+                </p>
+
+
+                <p>
+
+                    Oleh karena itu, nilai metrik pada
+                    halaman ini digunakan sebagai hasil
+                    evaluasi pada dataset dan skenario
+                    pengujian yang digunakan dalam penelitian.
+
+                </p>
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ================================================== -->
+        <!-- ACTION -->
+        <!-- ================================================== -->
+
+        <section class="dashboard-actions">
+
+
+            <a
+                href="/prediksi"
+                class="dashboard-button"
+            >
+                Coba Prediksi
+            </a>
+
+
+            <a
+                href="/"
+                class="dashboard-button secondary"
+            >
+                Kembali ke Dashboard
+            </a>
+
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ================================================== -->
+    <!-- FOOTER -->
+    <!-- ================================================== -->
+
+    <footer class="footer">
+
+
+        <p>
+            Prediksi Jumlah Kasus MBG
+        </p>
+
+
+        <p>
+            Machine Learning Project
+        </p>
+
+
+    </footer>
+
+
+    <!-- ================================================== -->
+    <!-- CHART.JS -->
+    <!-- ================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <!-- ================================================== -->
+    <!-- CHART JAVASCRIPT -->
+    <!-- ================================================== -->
+
+    <script>
+
+        /*
+         * Data perbandingan diambil langsung dari
+         * comparison_data yang dikirim Flask.
+         *
+         * Dengan cara ini:
+         *
+         * Tabel = data yang sama
+         * Grafik = data yang sama
+         *
+         * Jadi tidak ada angka yang ditulis ulang
+         * secara manual di halaman.
+         */
+
+        const comparisonData =
+            {{ comparison_data | tojson }};
+
+
+        // ====================================================
+        // MODEL
+        // ====================================================
+
+        const modelLabels =
+            comparisonData.map(
+                row => row["Model"]
+            );
+
+
+        // ====================================================
+        // MAE
+        // ====================================================
+
+        const maeValues =
+            comparisonData.map(
+                row => Number(row["MAE"])
+            );
+
+
+        // ====================================================
+        // RMSE
+        // ====================================================
+
+        const rmseValues =
+            comparisonData.map(
+                row => Number(row["RMSE"])
+            );
+
+
+        // ====================================================
+        // R2
+        // ====================================================
+
+        const r2Values =
+            comparisonData.map(
+                row => Number(row["R2"])
+            );
+
+
+        // ====================================================
+        // KONFIGURASI UMUM
+        // ====================================================
+
+        const commonOptions = {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+
+                    display: false
+
+                },
+
+                tooltip: {
+
+                    callbacks: {
+
+                        label: function(context) {
+
+                            return context.dataset.label
+                                + ": "
+                                + context.parsed.y;
+
+                        }
+
+                    }
+
+                }
+
+            },
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: true,
+
+                    grid: {
+
+                        color:
+                            "rgba(148, 163, 184, 0.20)"
+
+                    },
+
+                    ticks: {
+
+                        color: "#64748b"
+
+                    }
+
+                },
+
+                x: {
+
+                    grid: {
+
+                        display: false
+
+                    },
+
+                    ticks: {
+
+                        color: "#64748b"
+
+                    }
+
+                }
+
+            }
+
+        };
+
+
+        // ====================================================
+        // MAE CHART
+        // ====================================================
+
+        new Chart(
+
+            document.getElementById(
+                "maeChart"
+            ),
+
+            {
+
+                type: "bar",
+
+                data: {
+
+                    labels: modelLabels,
+
+                    datasets: [
+
+                        {
+
+                            label: "MAE",
+
+                            data: maeValues,
+
+                            borderWidth: 0,
+
+                            borderRadius: 6
+
+                        }
+
+                    ]
+
+                },
+
+                options: commonOptions
+
+            }
+
+        );
+
+
+        // ====================================================
+        // RMSE CHART
+        // ====================================================
+
+        new Chart(
+
+            document.getElementById(
+                "rmseChart"
+            ),
+
+            {
+
+                type: "bar",
+
+                data: {
+
+                    labels: modelLabels,
+
+                    datasets: [
+
+                        {
+
+                            label: "RMSE",
+
+                            data: rmseValues,
+
+                            borderWidth: 0,
+
+                            borderRadius: 6
+
+                        }
+
+                    ]
+
+                },
+
+                options: commonOptions
+
+            }
+
+        );
+
+
+        // ====================================================
+        // R2 CHART
+        // ====================================================
+
+        new Chart(
+
+            document.getElementById(
+                "r2Chart"
+            ),
+
+            {
+
+                type: "bar",
+
+                data: {
+
+                    labels: modelLabels,
+
+                    datasets: [
+
+                        {
+
+                            label: "R²",
+
+                            data: r2Values,
+
+                            borderWidth: 0,
+
+                            borderRadius: 6
+
+                        }
+
+                    ]
+
+                },
+
+                options: {
+
+                    ...commonOptions,
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero: false,
+
+                            grid: {
+
+                                color:
+                                    "rgba(148, 163, 184, 0.20)"
+
+                            },
+
+                            ticks: {
+
+                                color: "#64748b"
+
+                            }
+
+                        },
+
+                        x: {
+
+                            grid: {
+
+                                display: false
+
+                            },
+
+                            ticks: {
+
+                                color: "#64748b"
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        );
+
+    </script>
+
+
+</body>
+
+</html>

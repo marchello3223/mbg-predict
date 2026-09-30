@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Dashboard - MBG Predict</title>
+
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- ================================================== -->
+    <!-- NAVBAR -->
+    <!-- ================================================== -->
+
+    <header class="navbar">
+
+        <div class="navbar-container">
+
+
+            <div class="logo">
+                MBG Predict
+            </div>
+
+
+            <div class="dashboard-nav">
+
+                <a href="/" class="active">
+                    Dashboard
+                </a>
+
+                <a href="/prediksi">
+                    Prediksi
+                </a>
+
+                <a href="/perbandingan-model">
+                    Perbandingan Model
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </header>
+
+
+    <!-- ================================================== -->
+    <!-- MAIN -->
+    <!-- ================================================== -->
+
+    <main class="container">
+
+
+        <!-- ================================================== -->
+        <!-- HERO -->
+        <!-- ================================================== -->
+
+        <section class="hero">
+
+
+            <span class="badge">
+                DASHBOARD
+            </span>
+
+
+            <h1>
+                MBG Predict
+            </h1>
+
+
+            <p>
+
+                Sistem prediksi jumlah kasus pada
+                Program Makan Bergizi Gratis berbasis
+                Machine Learning.
+
+            </p>
+
+
+        </section>
+
+
+        <!-- ================================================== -->
+        <!-- STATISTICS -->
+        <!-- ================================================== -->
+
+        <section class="dashboard-stats">
+
+
+            <!-- DATA CLEAN -->
+
+            <div class="stat-card">
+
+                <span class="stat-label">
+                    DATA TERKUMPUL
+                </span>
+
+                <strong class="stat-number">
+                    {{ jumlah_data_clean }}
+                </strong>
+
+                <span class="stat-description">
+                    data unik setelah cleaning
+                </span>
+
+            </div>
+
+
+            <!-- DATA ML -->
+
+            <div class="stat-card">
+
+                <span class="stat-label">
+                    DATA UNTUK ML
+                </span>
+
+                <strong class="stat-number">
+                    {{ jumlah_data_ml }}
+                </strong>
+
+                <span class="stat-description">
+                    data lengkap untuk pemodelan
+                </span>
+
+            </div>
+
+
+            <!-- PROVINSI -->
+
+            <div class="stat-card">
+
+                <span class="stat-label">
+                    PROVINSI
+                </span>
+
+                <strong class="stat-number">
+                    {{ jumlah_provinsi }}
+                </strong>
+
+                <span class="stat-description">
+                    wilayah dalam dataset ML
+                </span>
+
+            </div>
+
+
+            <!-- MODEL -->
+
+            <div class="stat-card">
+
+                <span class="stat-label">
+                    MODEL
+                </span>
+
+                <strong class="stat-number">
+                    {{ jumlah_model }}
+                </strong>
+
+                <span class="stat-description">
+                    metode Machine Learning
+                </span>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ================================================== -->
+        <!-- DATA RANGE -->
+        <!-- ================================================== -->
+
+        <section class="card dashboard-range">
+
+
+            <div>
+
+                <span class="stat-label">
+                    RENTANG DATA
+                </span>
+
+                <h2>
+
+                    {{ tahun_awal }}
+                    -
+                    {{ tahun_akhir }}
+
+                </h2>
+
+                <p>
+
+                    Rentang tahun berdasarkan tanggal
+                    kasus yang tersedia pada dataset
+                    yang digunakan untuk pemodelan.
+
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ================================================== -->
+        <!-- MODEL SUMMARY -->
+        <!-- ================================================== -->
+
+        <section class="card dashboard-models">
+
+
+            <div class="card-header">
+
+                <h2>
+                    Ringkasan Model
+                </h2>
+
+                <p>
+
+                    Hasil evaluasi model berdasarkan
+                    dataset dan pembagian data pengujian
+                    yang digunakan.
+
+                </p>
+
+            </div>
+
+
+            <div class="dashboard-model-list">
+
+
+                {% for row in comparison_data %}
+
+
+                <div class="dashboard-model-item">
+
+
+                    <div class="dashboard-model-name">
+
+                        <strong>
+                            {{ row["Model"] }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="dashboard-model-metric">
+
+                        <span>
+                            MAE
+                        </span>
+
+                        <strong>
+                            {{ "%.2f"|format(row["MAE"]) }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="dashboard-model-metric">
+
+                        <span>
+                            RMSE
+                        </span>
+
+                        <strong>
+                            {{ "%.2f"|format(row["RMSE"]) }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="dashboard-model-metric">
+
+                        <span>
+                            R²
+                        </span>
+
+                        <strong>
+                            {{ "%.4f"|format(row["R2"]) }}
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ================================================== -->
+        <!-- ACTION -->
+        <!-- ================================================== -->
+
+        <section class="dashboard-actions">
+
+
+            <a
+                href="/prediksi"
+                class="dashboard-button"
+            >
+
+                Mulai Prediksi
+
+            </a>
+
+
+            <a
+                href="/perbandingan-model"
+                class="dashboard-button secondary"
+            >
+
+                Lihat Perbandingan Model
+
+            </a>
+
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ================================================== -->
+    <!-- FOOTER -->
+    <!-- ================================================== -->
+
+    <footer class="footer">
+
+
+        <p>
+            Prediksi Jumlah Kasus MBG
+        </p>
+
+
+        <p>
+            Machine Learning Project
+        </p>
+
+
+    </footer>
+
+
+</body>
+
+</html>

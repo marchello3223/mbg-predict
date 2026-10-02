@@ -197,15 +197,15 @@
                                 </td>
 
                                 <td>
-                                    {{ row["MAE"] }}
+                                     {{ "%.2f"|format(row["MAE"]|float) }}
                                 </td>
 
                                 <td>
-                                    {{ row["RMSE"] }}
+                                    {{ "%.2f"|format(row["RMSE"]|float) }}
                                 </td>
 
                                 <td>
-                                    {{ row["R2"] }}
+                                    {{ "%.2f"|format(row["R2"]|float) }}
                                 </td>
 
                             </tr>
@@ -630,7 +630,7 @@
 
                             return context.dataset.label
                                 + ": "
-                                + context.parsed.y;
+                                + context.parsed.y.toFixed(2);
 
                         }
 

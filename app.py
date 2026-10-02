@@ -15,7 +15,7 @@ app = Flask(__name__)
 # PATH PROJECT
 # ============================================================
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent
 
 MODEL_DIR = BASE_DIR / "machinelearning"
 WEBSCRAPER_DIR = BASE_DIR / "webscraper"
